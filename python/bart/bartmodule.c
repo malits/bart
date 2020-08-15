@@ -1,6 +1,10 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <structmember.h>
+// TODO: For the sake of organization, move these elsewhere
+// E.g., separate python files for separate libraries.
+// Ultimately automate from source code in C.
+#include "../../src/simu/phantom.h"
 
 typedef struct {
     PyObject_HEAD;
@@ -20,36 +24,24 @@ static int Bart_init(BartObject * self, PyObject * args, PyObject * kwds)
     return 0;
 }
 
-// TODO: This was breaking class methods
-// static PyObject * bart_getattr(BartObject * self, char * name)
-// {
-//     if (strcmp(name, "version") == 0)
-//         return PyFloat_FromDouble(self->version);
-
-//     PyErr_Format(PyExc_AttributeError,
-//                  "No attribute '%.400s'",
-//                  name);
-//     return NULL;
-// }
-
-// static int bart_setattr(BartObject *obj, char *name, PyObject *v)
-// {
-//     PyErr_Format(PyExc_RuntimeError, "Read-only attribute: %s", name);
-//     return -1;
-// }
-
 static PyObject * Bart_help(BartObject *self, PyObject * Py_UNUSED(ignored))
 {
     return PyUnicode_FromString("BART: Toolbox for Computational Magnetic Resonance Imaging (MRI)");
 }
 
+static PyObject * Bart_phantom(BartObject * self, PyObject * args) 
+{
+    return PyUnicode_FromString("Shepp-Logan Phantom");
+}
+
 static PyMemberDef Bart_members[] = {
-    {"version", T_OBJECT_EX, offsetof(BartObject, version), 0, "version"},
+    {"version", T_FLOAT, offsetof(BartObject, version), READONLY, "version"},
     {NULL}
 };
 
 static PyMethodDef Bart_methods[] = {
     {"help", (PyCFunction) Bart_help, METH_NOARGS, "Help string."},
+    {"phantom", (PyCFunction) Bart_phantom, METH_VARARGS, "Simple Numerical Phantom"},
     {NULL, NULL, 0, NULL}
 };
 
@@ -62,8 +54,6 @@ static PyTypeObject Bart = {
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
     .tp_new = Bart_new,
     .tp_init = (initproc) Bart_init,
-    //.tp_getattr = (getattrfunc) bart_getattr,
-    //.tp_setattr = (setattrfunc) bart_setattr,
     .tp_methods = Bart_methods,
     .tp_members = Bart_members,
 };
