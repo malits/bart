@@ -4,7 +4,6 @@
 // TODO: For the sake of organization, move these elsewhere
 // E.g., separate python files for separate libraries.
 // Ultimately automate from source code in C.
-#include "../../src/simu/phantom.h"
 
 typedef struct {
     PyObject_HEAD;

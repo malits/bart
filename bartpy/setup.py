@@ -3,8 +3,7 @@ from distutils.core import setup, Extension
 
 bart_module = Extension ("bart", 
     sources=["bartmodule.c"],
-    library_dirs=[os.path.join(os.environ["TOOLBOX_PATH"], "lib/lib*.a")],
-    extra_link_args=["-whole-archive"]
+    runtime_library_dirs=["bart.so"]
 )
 
 def main():
