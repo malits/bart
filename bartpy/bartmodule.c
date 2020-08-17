@@ -30,7 +30,8 @@ static PyObject * Bart_help(BartObject *self, PyObject * Py_UNUSED(ignored))
 
 static PyObject * Bart_phantom(BartObject * self, PyObject * args) 
 {
-    return PyUnicode_FromString("Shepp-Logan Phantom");
+    calc_bart();
+    return PyLong_FromDouble(1);
 }
 
 static PyMemberDef Bart_members[] = {
