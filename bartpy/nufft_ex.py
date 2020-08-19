@@ -22,3 +22,5 @@ tstrs = (c_long * 16)(0)
 samples = None
 
 out = dst.ctypes.data_as(POINTER(2 * c_float))
+
+calc_phantom(dims, out, d3, c_bool(False), tstrs, samples)
