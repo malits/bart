@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import ctypes
 from ctypes import *
 import os
 import sys
@@ -20,4 +21,4 @@ d3 = c_bool(False)
 tstrs = (c_long * 16)(0)
 samples = None
 
-out = dst.ctypes.data_as(ctypes.POINTER(2 * ctypes.c_float))
+out = dst.ctypes.data_as(POINTER(2 * c_float))
